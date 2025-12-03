@@ -1,0 +1,7 @@
+---
+alwaysApply: true
+---
+
+WordPress development rules
+
+- always use [] instead of array()

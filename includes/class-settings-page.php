@@ -21,8 +21,8 @@ class LM_Widgets_Settings_Page
    */
   public function __construct()
   {
-    add_action('admin_menu', array($this, 'add_admin_menu'));
-    add_action('admin_init', array($this, 'register_settings'));
+    add_action('admin_menu', [$this, 'add_admin_menu']);
+    add_action('admin_init', [$this, 'register_settings']);
   }
 
   /**
@@ -35,7 +35,7 @@ class LM_Widgets_Settings_Page
       __('La Marketerie', 'lm-widgets'),
       'manage_options',
       'lm-widgets-settings',
-      array($this, 'render_settings_page'),
+      [$this, 'render_settings_page'],
       'dashicons-performance',
       90
     );
@@ -49,7 +49,7 @@ class LM_Widgets_Settings_Page
     register_setting(
       'lm_widgets_settings_group',
       'lm_widgets_settings',
-      array($this, 'sanitize_settings')
+      [$this, 'sanitize_settings']
     );
   }
 
@@ -62,7 +62,7 @@ class LM_Widgets_Settings_Page
   public function sanitize_settings($input)
   {
     $available_widgets = LM_Widgets_Plugin::get_available_widgets();
-    $sanitized = array();
+    $sanitized = [];
 
     foreach ($available_widgets as $widget_id => $widget_data) {
       $sanitized[$widget_id] = isset($input[$widget_id]) ? (bool) $input[$widget_id] : false;
@@ -82,13 +82,13 @@ class LM_Widgets_Settings_Page
 
     // Sauvegarde des réglages
     if (isset($_POST['lm_widgets_save_settings']) && check_admin_referer('lm_widgets_save_settings')) {
-      $settings = isset($_POST['lm_widgets_settings']) ? $_POST['lm_widgets_settings'] : array();
+      $settings = isset($_POST['lm_widgets_settings']) ? $_POST['lm_widgets_settings'] : [];
       $sanitized_settings = $this->sanitize_settings($settings);
       update_option('lm_widgets_settings', $sanitized_settings);
       echo '<div class="notice notice-success is-dismissible"><p>' . esc_html__('Réglages sauvegardés avec succès.', 'lm-widgets') . '</p></div>';
     }
 
-    $settings = get_option('lm_widgets_settings', array());
+    $settings = get_option('lm_widgets_settings', []);
     $available_widgets = LM_Widgets_Plugin::get_available_widgets();
 ?>
     <div class="wrap">

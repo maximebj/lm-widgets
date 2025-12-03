@@ -21,8 +21,8 @@ class LM_Widgets_Elementor_Integration
    */
   public function __construct()
   {
-    add_action('elementor/elements/categories_registered', array($this, 'register_category'));
-    add_action('elementor/widgets/register', array($this, 'register_widgets'));
+    add_action('elementor/elements/categories_registered', [$this, 'register_category']);
+    add_action('elementor/widgets/register', [$this, 'register_widgets']);
   }
 
   /**
@@ -34,10 +34,10 @@ class LM_Widgets_Elementor_Integration
   {
     $elements_manager->add_category(
       'la-marketerie',
-      array(
+      [
         'title' => __('La Marketerie', 'lm-widgets'),
         'icon'  => 'fa fa-plug',
-      )
+      ]
     );
   }
 

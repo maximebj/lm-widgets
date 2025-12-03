@@ -65,13 +65,13 @@ class LM_Widgets_Plugin
   private function init_hooks()
   {
     // Activation du plugin
-    register_activation_hook(LM_WIDGETS_PLUGIN_FILE, array($this, 'activate'));
+    register_activation_hook(LM_WIDGETS_PLUGIN_FILE, [$this, 'activate']);
 
     // Désactivation du plugin
-    register_deactivation_hook(LM_WIDGETS_PLUGIN_FILE, array($this, 'deactivate'));
+    register_deactivation_hook(LM_WIDGETS_PLUGIN_FILE, [$this, 'deactivate']);
 
     // Initialisation après que WordPress soit chargé
-    add_action('init', array($this, 'init'));
+    add_action('init', [$this, 'init']);
   }
 
   /**
@@ -101,10 +101,10 @@ class LM_Widgets_Plugin
   public function activate()
   {
     // Initialisation des options par défaut si elles n'existent pas
-    $default_settings = array(
+    $default_settings = [
       'example_widget_1' => true,
       'example_widget_2' => true,
-    );
+    ];
 
     if (! get_option('lm_widgets_settings')) {
       add_option('lm_widgets_settings', $default_settings);
@@ -130,22 +130,22 @@ class LM_Widgets_Plugin
    */
   public static function get_available_widgets()
   {
-    return array(
-      'example_widget_1' => array(
+    return [
+      'example_widget_1' => [
         'name'        => 'example_widget_1',
         'title'       => __('Widget Exemple 1', 'lm-widgets'),
         'description' => __('Premier widget d\'exemple pour démonstration', 'lm-widgets'),
         'class'       => 'LM_Widgets_Example_Widget_1',
         'file'        => 'widgets/class-example-widget-1.php',
-      ),
-      'example_widget_2' => array(
+      ],
+      'example_widget_2' => [
         'name'        => 'example_widget_2',
         'title'       => __('Widget Exemple 2', 'lm-widgets'),
         'description' => __('Deuxième widget d\'exemple pour démonstration', 'lm-widgets'),
         'class'       => 'LM_Widgets_Example_Widget_2',
         'file'        => 'widgets/class-example-widget-2.php',
-      ),
-    );
+      ],
+    ];
   }
 
   /**
@@ -155,9 +155,9 @@ class LM_Widgets_Plugin
    */
   public static function get_active_widgets()
   {
-    $settings = get_option('lm_widgets_settings', array());
+    $settings = get_option('lm_widgets_settings', []);
     $available_widgets = self::get_available_widgets();
-    $active_widgets = array();
+    $active_widgets = [];
 
     foreach ($available_widgets as $widget_id => $widget_data) {
       if (isset($settings[$widget_id]) && $settings[$widget_id]) {

@@ -53,7 +53,7 @@ class LM_Widgets_Example_Widget_2 extends \Elementor\Widget_Base
    */
   public function get_categories()
   {
-    return array('la-marketerie');
+    return ['la-marketerie'];
   }
 
   /**
@@ -63,7 +63,7 @@ class LM_Widgets_Example_Widget_2 extends \Elementor\Widget_Base
    */
   public function get_keywords()
   {
-    return array('exemple', 'bouton', 'la marketerie');
+    return ['exemple', 'bouton', 'la marketerie'];
   }
 
   /**
@@ -74,35 +74,35 @@ class LM_Widgets_Example_Widget_2 extends \Elementor\Widget_Base
     // Section Contenu
     $this->start_controls_section(
       'content_section',
-      array(
+      [
         'label' => __('Contenu', 'lm-widgets'),
         'tab'   => \Elementor\Controls_Manager::TAB_CONTENT,
-      )
+      ]
     );
 
     $this->add_control(
       'button_text',
-      array(
+      [
         'label'       => __('Texte du bouton', 'lm-widgets'),
         'type'        => \Elementor\Controls_Manager::TEXT,
         'default'     => __('Cliquez ici', 'lm-widgets'),
         'placeholder' => __('Entrez le texte du bouton', 'lm-widgets'),
-      )
+      ]
     );
 
     $this->add_control(
       'button_link',
-      array(
+      [
         'label'       => __('Lien', 'lm-widgets'),
         'type'        => \Elementor\Controls_Manager::URL,
         'placeholder' => __('https://votre-lien.com', 'lm-widgets'),
         'show_external' => true,
-        'default'     => array(
+        'default'     => [
           'url'         => '',
           'is_external' => false,
           'nofollow'    => false,
-        ),
-      )
+        ],
+      ]
     );
 
     $this->end_controls_section();
@@ -110,79 +110,79 @@ class LM_Widgets_Example_Widget_2 extends \Elementor\Widget_Base
     // Section Style
     $this->start_controls_section(
       'style_section',
-      array(
+      [
         'label' => __('Style', 'lm-widgets'),
         'tab'   => \Elementor\Controls_Manager::TAB_STYLE,
-      )
+      ]
     );
 
     $this->add_control(
       'button_color',
-      array(
+      [
         'label'     => __('Couleur du bouton', 'lm-widgets'),
         'type'      => \Elementor\Controls_Manager::COLOR,
         'default'   => '#0073aa',
-        'selectors' => array(
+        'selectors' => [
           '{{WRAPPER}} .lm-example-widget-2-button' => 'background-color: {{VALUE}};',
-        ),
-      )
+        ],
+      ]
     );
 
     $this->add_control(
       'button_text_color',
-      array(
+      [
         'label'     => __('Couleur du texte', 'lm-widgets'),
         'type'      => \Elementor\Controls_Manager::COLOR,
         'default'   => '#ffffff',
-        'selectors' => array(
+        'selectors' => [
           '{{WRAPPER}} .lm-example-widget-2-button' => 'color: {{VALUE}};',
-        ),
-      )
+        ],
+      ]
     );
 
     $this->add_group_control(
       \Elementor\Group_Control_Typography::get_type(),
-      array(
+      [
         'name'     => 'button_typography',
         'label'    => __('Typographie', 'lm-widgets'),
         'selector' => '{{WRAPPER}} .lm-example-widget-2-button',
-      )
+      ]
     );
 
     $this->add_responsive_control(
       'button_padding',
-      array(
+      [
         'label'      => __('Espacement', 'lm-widgets'),
         'type'       => \Elementor\Controls_Manager::DIMENSIONS,
-        'size_units' => array('px', 'em', '%'),
-        'selectors'  => array(
+        'size_units' => ['px', 'em', '%'],
+        'selectors'  => [
           '{{WRAPPER}} .lm-example-widget-2-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-        ),
-        'default'    => array(
+        ],
+        'default'    => [
           'top'    => '12',
           'right'  => '24',
           'bottom' => '12',
           'left'   => '24',
-        ),
-      )
+        ],
+      ]
     );
 
     $this->add_responsive_control(
       'button_border_radius',
-      array(
+      [
         'label'      => __('Rayon des bordures', 'lm-widgets'),
         'type'       => \Elementor\Controls_Manager::DIMENSIONS,
-        'size_units' => array('px', '%'),
-        'selectors'  => array(
+        'size_units' => ['px', '%'],
+        'selectors'  => [
           '{{WRAPPER}} .lm-example-widget-2-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-        ),
-        'default'    => array(
+        ],
+        'default'    => [
           'top'    => '4',
           'right'  => '4',
           'bottom' => '4',
           'left'   => '4',
-        ),
-      )
+        ],
+      ]
     );
 
     $this->end_controls_section();
