@@ -21,7 +21,8 @@ class LM_Widgets_Elementor_Integration
    */
   public function __construct()
   {
-    add_action('elementor/elements/categories_registered', [$this, 'register_category']);
+    add_action('elementor/elements/categories_registered', [$this, 'register_category'], 1);
+    add_action('elementor/elements/categories_registered', [$this, 'reorder_categories'], 999);
     add_action('elementor/widgets/register', [$this, 'register_widgets']);
   }
 
@@ -39,6 +40,29 @@ class LM_Widgets_Elementor_Integration
         'icon'  => 'fa fa-plug',
       ]
     );
+  }
+
+  /**
+   * Réorganise les catégories pour placer "La Marketerie" en premier
+   *
+   * @param \Elementor\Elements_Manager $elements_manager Gestionnaire d'éléments Elementor.
+   */
+  public function reorder_categories($elements_manager)
+  {
+    $categories = $elements_manager->get_categories();
+
+    if (isset($categories['la-marketerie'])) {
+      $la_marketerie = $categories['la-marketerie'];
+      unset($categories['la-marketerie']);
+
+      // Réorganiser : La Marketerie en premier, puis les autres
+      $reordered = ['la-marketerie' => $la_marketerie] + $categories;
+
+      // Utiliser la réflexion pour modifier l'ordre des catégories
+      $reflection = new \ReflectionClass($elements_manager);
+      $property = $reflection->getProperty('categories');
+      $property->setValue($elements_manager, $reordered);
+    }
   }
 
   /**
