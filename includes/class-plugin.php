@@ -72,6 +72,9 @@ class LM_Widgets_Plugin
 
     // Initialisation après que WordPress soit chargé
     add_action('init', [$this, 'init']);
+
+    // Ajout du lien "Réglages" dans la liste des plugins
+    add_filter('plugin_action_links_' . plugin_basename(LM_WIDGETS_PLUGIN_FILE), [$this, 'add_settings_link']);
   }
 
   /**
@@ -166,5 +169,22 @@ class LM_Widgets_Plugin
     }
 
     return $active_widgets;
+  }
+
+  /**
+   * Ajoute le lien "Réglages" dans la liste des plugins
+   *
+   * @param array $links Liens existants.
+   * @return array Liens modifiés avec le lien "Réglages"
+   */
+  public function add_settings_link($links)
+  {
+    $settings_link = sprintf(
+      '<a href="%s">%s</a>',
+      esc_url(admin_url('admin.php?page=lm-widgets-settings')),
+      esc_html__('Réglages', 'lm-widgets')
+    );
+    array_unshift($links, $settings_link);
+    return $links;
   }
 }
