@@ -202,13 +202,14 @@ class LM_Widgets_Example_Widget_2 extends \Elementor\Widget_Base
     $target = $settings['button_link']['is_external'] ? ' target="_blank"' : '';
     $nofollow = $settings['button_link']['nofollow'] ? ' rel="nofollow"' : '';
     $url = ! empty($settings['button_link']['url']) ? $settings['button_link']['url'] : '#';
-?>
-    <div class="lm-example-widget-2">
-      <a href="<?php echo esc_url($url); ?>" class="lm-example-widget-2-button" <?php echo $target . $nofollow; ?>>
-        <?php echo esc_html($settings['button_text']); ?>
-      </a>
-    </div>
-  <?php
+
+    require_once LM_WIDGETS_PLUGIN_DIR . 'templates/template-example-widget-2.php';
+  }
+
+
+  public function get_style_depends(): array
+  {
+    return ['example-widget-2'];
   }
 
   /**
@@ -216,7 +217,7 @@ class LM_Widgets_Example_Widget_2 extends \Elementor\Widget_Base
    */
   protected function _content_template()
   {
-  ?>
+?>
     <div class="lm-example-widget-2">
       <# if ( settings.button_text ) { #>
         <a href="{{{ settings.button_link.url || '#' }}}" class="lm-example-widget-2-button"

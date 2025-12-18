@@ -46,12 +46,8 @@ class LM_Widgets_CTA extends \Elementor\Widget_Base
   protected function render()
   {
     $settings = $this->get_settings_for_display();
-?>
-    <div class="lm-widget-cta">
-      <h2>MON CTA</h2>
-      <p>le contenu du CTA</p>
-    </div>
-<?php
+
+    require_once LM_WIDGETS_PLUGIN_DIR . 'templates/template-cta-widget.php';
   }
 
   public function get_style_depends(): array

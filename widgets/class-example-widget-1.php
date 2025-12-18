@@ -154,19 +154,8 @@ class LM_Widgets_Example_Widget_1 extends \Elementor\Widget_Base
   protected function render()
   {
     $settings = $this->get_settings_for_display();
-?>
-    <div class="lm-example-widget-1">
-      <?php if (! empty($settings['title'])) : ?>
-        <h3 class="lm-example-widget-1-title"><?php echo esc_html($settings['title']); ?></h3>
-      <?php endif; ?>
 
-      <?php if (! empty($settings['description'])) : ?>
-        <div class="lm-example-widget-1-description">
-          <?php echo wp_kses_post(wpautop($settings['description'])); ?>
-        </div>
-      <?php endif; ?>
-    </div>
-  <?php
+    require_once LM_WIDGETS_PLUGIN_DIR . 'templates/template-example-widget-1.php';
   }
 
   /**
@@ -174,7 +163,7 @@ class LM_Widgets_Example_Widget_1 extends \Elementor\Widget_Base
    */
   protected function _content_template()
   {
-  ?>
+?>
     <div class="lm-example-widget-1">
       <# if ( settings.title ) { #>
         <h3 class="lm-example-widget-1-title">{{{ settings.title }}}</h3>

@@ -110,6 +110,7 @@ class LM_Widgets_Plugin
     $default_settings = [
       'example_widget_1' => true,
       'example_widget_2' => true,
+      'lm_widget_cta' => true,
     ];
 
     if (! get_option('lm_widgets_settings')) {
@@ -150,6 +151,7 @@ class LM_Widgets_Plugin
         'description' => __('Deuxième widget d\'exemple pour démonstration', 'lm-widgets'),
         'class'       => 'LM_Widgets_Example_Widget_2',
         'file'        => 'widgets/class-example-widget-2.php',
+        'style'       => 'example-widget-2',
       ],
       'lm_widget_cta' => [
         'name'        => 'lm_widget_cta',
