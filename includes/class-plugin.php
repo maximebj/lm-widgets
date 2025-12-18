@@ -75,6 +75,9 @@ class LM_Widgets_Plugin
 
     // Ajout du lien "Réglages" dans la liste des plugins
     add_filter('plugin_action_links_' . plugin_basename(LM_WIDGETS_PLUGIN_FILE), [$this, 'add_settings_link']);
+
+    // Enregistrement des styles
+    add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
   }
 
   /**
@@ -148,6 +151,14 @@ class LM_Widgets_Plugin
         'class'       => 'LM_Widgets_Example_Widget_2',
         'file'        => 'widgets/class-example-widget-2.php',
       ],
+      'lm_widget_cta' => [
+        'name'        => 'lm_widget_cta',
+        'title'       => __('CTA', 'lm-widgets'),
+        'description' => __('Un bloc d’appel à l’action', 'lm-widgets'),
+        'class'       => 'LM_Widgets_CTA',
+        'file'        => 'widgets/class-cta-widget.php',
+        'style'       => 'lm-widgets-cta',
+      ],
     ];
   }
 
@@ -186,5 +197,20 @@ class LM_Widgets_Plugin
     );
     array_unshift($links, $settings_link);
     return $links;
+  }
+
+  /**
+   * Déclare automatiquement les styles des widgets activés
+   */
+  public function enqueue_styles()
+  {
+    // Récupérer les widgets activés
+    $active_widgets = self::get_active_widgets();
+
+    foreach ($active_widgets as $widget_id => $widget_data) {
+      if (isset($widget_data['style'])) {
+        wp_register_style($widget_data['style'], LM_WIDGETS_PLUGIN_URL . 'assets/css/' . $widget_data['style'] . '.css', [], LM_WIDGETS_VERSION);
+      }
+    }
   }
 }
