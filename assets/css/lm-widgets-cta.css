@@ -1,3 +1,20 @@
 .lm-widget-cta {
   border: 2px solid black;
 }
+
+.lm-widget-cta-icon {
+  width: 100px;
+  height: 100px;
+}
+
+.lm-widget-cta-title {
+  margin-top: 0;
+}
+
+.lm-widget-cta-description p:first-child {
+  margin-block-start: 0;
+}
+
+.lm-widget-cta-description p:last-child {
+  margin-block-end: 0;
+}
