@@ -1,5 +1,5 @@
 .lm-widget-cta {
-  border: 2px solid black;
+  border: 2px solid var(--e-global-color-primary, #000);
 }
 
 .lm-widget-cta-icon {
