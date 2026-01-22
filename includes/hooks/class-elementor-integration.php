@@ -97,7 +97,7 @@ class LM_Widgets_Elementor_Integration
     $active_widgets = LM_Widgets_Auto_Registration::get_active_widgets();
 
     foreach ($active_widgets as $widget_id => $widget_data) {
-      wp_register_style($widget_data['name'], LM_WIDGETS_PLUGIN_URL . 'includes/widgets/' . $widget_data['name'] .  '/style.css', [], LM_WIDGETS_VERSION);
+      wp_register_style($widget_data['name'], LM_WIDGETS_PLUGIN_URL . 'widgets/' . $widget_data['name'] .  '/style.css', [], LM_WIDGETS_VERSION);
     }
   }
 }

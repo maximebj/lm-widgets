@@ -24,7 +24,7 @@ abstract class LM_Widgets_Auto_Registration
   public static function get_available_widgets()
   {
     $widgets = [];
-    $widgets_dir = LM_WIDGETS_PLUGIN_DIR . 'includes/widgets/';
+    $widgets_dir = LM_WIDGETS_PLUGIN_DIR . 'widgets/';
 
     // Vérifier que le dossier existe
     if (! is_dir($widgets_dir)) {
@@ -87,7 +87,7 @@ abstract class LM_Widgets_Auto_Registration
           'title'       => $title ?: ucwords(str_replace(['-', '_'], ' ', $widget_name)),
           'description' => $description ?: '',
           'class'       => $class_name,
-          'file'        => 'includes/widgets/' . $widget_name . '/class-widget.php',
+          'file'        => 'widgets/' . $widget_name . '/class-widget.php',
         ];
       }
     }
