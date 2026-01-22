@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Widget Elementor Exemple 1
+ * Widget Title and Text
  *
  * @package LM_Widgets
  */
@@ -10,10 +10,7 @@ if (! defined('ABSPATH')) {
   exit;
 }
 
-/**
- * Widget Elementor Exemple 1
- */
-class LM_Widgets_Example_Widget_1 extends \Elementor\Widget_Base
+class Widget_Title_And_Text extends \Elementor\Widget_Base
 {
 
   /**
@@ -23,7 +20,7 @@ class LM_Widgets_Example_Widget_1 extends \Elementor\Widget_Base
    */
   public function get_name()
   {
-    return 'lm_example_widget_1';
+    return 'title-and-text';
   }
 
   /**
@@ -34,6 +31,16 @@ class LM_Widgets_Example_Widget_1 extends \Elementor\Widget_Base
   public function get_title()
   {
     return __('Widget Exemple 1', 'lm-widgets');
+  }
+
+  /**
+   * Récupère la description du widget
+   *
+   * @return string Description du widget
+   */
+  public function get_description()
+  {
+    return __('Widget pour afficher un titre et une description', 'lm-widgets');
   }
 
   /**
@@ -155,7 +162,17 @@ class LM_Widgets_Example_Widget_1 extends \Elementor\Widget_Base
   {
     $settings = $this->get_settings_for_display();
 
-    require_once LM_WIDGETS_PLUGIN_DIR . 'templates/template-example-widget-1.php';
+    require_once 'template.php';
+  }
+
+  /**
+   * Déclare les styles du widget
+   *
+   * @return array Styles du widget
+   */
+  public function get_style_depends(): array
+  {
+    return [$this->get_name()];
   }
 
   /**

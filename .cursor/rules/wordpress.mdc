@@ -4,5 +4,5 @@ alwaysApply: true
 
 WordPress development rules
 
-- always use [] instead of array()
+- always use `[]` instead of `array()`
 - always put nonce in forms and check it on form submission

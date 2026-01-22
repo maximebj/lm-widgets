@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Widget Elementor Exemple 1
+ * Widget CTA
  *
  * @package LM_Widgets
  */
@@ -10,20 +10,22 @@ if (! defined('ABSPATH')) {
   exit;
 }
 
-/**
- * Widget Elementor Exemple 1
- */
-class LM_Widgets_CTA extends \Elementor\Widget_Base
+class Widget_Call_To_Action extends \Elementor\Widget_Base
 {
 
   public function get_name()
   {
-    return 'lm_widget_cta';
+    return 'call-to-action';
   }
 
   public function get_title()
   {
     return __('CTA', 'lm-widgets');
+  }
+
+  public function get_description()
+  {
+    return __('Widget pour afficher un CTA', 'lm-widgets');
   }
 
   public function get_icon()
@@ -199,11 +201,16 @@ class LM_Widgets_CTA extends \Elementor\Widget_Base
     // var_dump($settings);
     // die();
 
-    require_once LM_WIDGETS_PLUGIN_DIR . 'templates/template-cta-widget.php';
+    require_once 'template.php';
   }
 
+  /**
+   * Déclare les styles du widget
+   *
+   * @return array Styles du widget
+   */
   public function get_style_depends(): array
   {
-    return ['lm-widgets-cta'];
+    return [$this->get_name()];
   }
 }

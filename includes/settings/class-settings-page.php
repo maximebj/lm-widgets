@@ -61,7 +61,7 @@ class LM_Widgets_Settings_Page
    */
   public function sanitize_settings($input)
   {
-    $available_widgets = LM_Widgets_Plugin::get_available_widgets();
+    $available_widgets = LM_Widgets_Auto_Registration::get_available_widgets();
     $sanitized = [];
 
     foreach ($available_widgets as $widget_id => $widget_data) {
@@ -89,7 +89,7 @@ class LM_Widgets_Settings_Page
     }
 
     $settings = get_option('lm_widgets_settings', []);
-    $available_widgets = LM_Widgets_Plugin::get_available_widgets();
+    $available_widgets = LM_Widgets_Auto_Registration::get_available_widgets();
 ?>
     <div class="wrap">
       <h1><?php echo esc_html(get_admin_page_title()); ?></h1>

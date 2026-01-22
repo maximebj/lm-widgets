@@ -85,8 +85,9 @@ class LM_Widgets_Plugin
    */
   private function load_dependencies()
   {
-    require_once LM_WIDGETS_PLUGIN_DIR . 'includes/class-elementor-integration.php';
-    require_once LM_WIDGETS_PLUGIN_DIR . 'includes/class-settings-page.php';
+    require_once LM_WIDGETS_PLUGIN_DIR . 'includes/helpers/class-widget-autoregistration.php';
+    require_once LM_WIDGETS_PLUGIN_DIR . 'includes/hooks/class-elementor-integration.php';
+    require_once LM_WIDGETS_PLUGIN_DIR . 'includes/settings/class-settings-page.php';
   }
 
   /**
@@ -107,11 +108,13 @@ class LM_Widgets_Plugin
   public function activate()
   {
     // Initialisation des options par défaut si elles n'existent pas
-    $default_settings = [
-      'example_widget_1' => true,
-      'example_widget_2' => true,
-      'lm_widget_cta' => true,
-    ];
+    $available_widgets = LM_Widgets_Auto_Registration::get_available_widgets();
+    $default_settings = [];
+
+    // Activer tous les widgets disponibles par défaut
+    foreach ($available_widgets as $widget_id => $widget_data) {
+      $default_settings[$widget_id] = true;
+    }
 
     if (! get_option('lm_widgets_settings')) {
       add_option('lm_widgets_settings', $default_settings);
@@ -128,60 +131,6 @@ class LM_Widgets_Plugin
   {
     // Flush rewrite rules si nécessaire
     flush_rewrite_rules();
-  }
-
-  /**
-   * Récupère les widgets disponibles
-   *
-   * @return array Liste des widgets disponibles
-   */
-  public static function get_available_widgets()
-  {
-    return [
-      'example_widget_1' => [
-        'name'        => 'example_widget_1',
-        'title'       => __('Widget Exemple 1', 'lm-widgets'),
-        'description' => __('Premier widget d\'exemple pour démonstration', 'lm-widgets'),
-        'class'       => 'LM_Widgets_Example_Widget_1',
-        'file'        => 'widgets/class-example-widget-1.php',
-      ],
-      'example_widget_2' => [
-        'name'        => 'example_widget_2',
-        'title'       => __('Widget Exemple 2', 'lm-widgets'),
-        'description' => __('Deuxième widget d\'exemple pour démonstration', 'lm-widgets'),
-        'class'       => 'LM_Widgets_Example_Widget_2',
-        'file'        => 'widgets/class-example-widget-2.php',
-        'style'       => 'example-widget-2',
-      ],
-      'lm_widget_cta' => [
-        'name'        => 'lm_widget_cta',
-        'title'       => __('CTA', 'lm-widgets'),
-        'description' => __('Un bloc d’appel à l’action', 'lm-widgets'),
-        'class'       => 'LM_Widgets_CTA',
-        'file'        => 'widgets/class-cta-widget.php',
-        'style'       => 'lm-widgets-cta',
-      ],
-    ];
-  }
-
-  /**
-   * Récupère les widgets activés
-   *
-   * @return array Liste des widgets activés
-   */
-  public static function get_active_widgets()
-  {
-    $settings = get_option('lm_widgets_settings', []);
-    $available_widgets = self::get_available_widgets();
-    $active_widgets = [];
-
-    foreach ($available_widgets as $widget_id => $widget_data) {
-      if (isset($settings[$widget_id]) && $settings[$widget_id]) {
-        $active_widgets[$widget_id] = $widget_data;
-      }
-    }
-
-    return $active_widgets;
   }
 
   /**
@@ -207,12 +156,10 @@ class LM_Widgets_Plugin
   public function enqueue_styles()
   {
     // Récupérer les widgets activés
-    $active_widgets = self::get_active_widgets();
+    $active_widgets = LM_Widgets_Auto_Registration::get_active_widgets();
 
     foreach ($active_widgets as $widget_id => $widget_data) {
-      if (isset($widget_data['style'])) {
-        wp_register_style($widget_data['style'], LM_WIDGETS_PLUGIN_URL . 'assets/css/' . $widget_data['style'] . '.css', [], LM_WIDGETS_VERSION);
-      }
+      wp_register_style($widget_data['name'], LM_WIDGETS_PLUGIN_URL . 'includes/widgets/' . $widget_data['name'] .  '/style.css', [], LM_WIDGETS_VERSION);
     }
   }
 }

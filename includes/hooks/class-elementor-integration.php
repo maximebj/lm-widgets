@@ -72,7 +72,7 @@ class LM_Widgets_Elementor_Integration
    */
   public function register_widgets($widgets_manager)
   {
-    $active_widgets = LM_Widgets_Plugin::get_active_widgets();
+    $active_widgets = LM_Widgets_Auto_Registration::get_active_widgets();
 
     foreach ($active_widgets as $widget_id => $widget_data) {
       // Chargement du fichier du widget

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Widget Elementor Exemple 2
+ * Button Widget
  *
  * @package LM_Widgets
  */
@@ -10,10 +10,7 @@ if (! defined('ABSPATH')) {
   exit;
 }
 
-/**
- * Widget Elementor Exemple 2
- */
-class LM_Widgets_Example_Widget_2 extends \Elementor\Widget_Base
+class Widget_Button extends \Elementor\Widget_Base
 {
 
   /**
@@ -23,7 +20,7 @@ class LM_Widgets_Example_Widget_2 extends \Elementor\Widget_Base
    */
   public function get_name()
   {
-    return 'lm_example_widget_2';
+    return 'button';
   }
 
   /**
@@ -34,6 +31,16 @@ class LM_Widgets_Example_Widget_2 extends \Elementor\Widget_Base
   public function get_title()
   {
     return __('Widget Exemple 2', 'lm-widgets');
+  }
+
+  /**
+   * Récupère la description du widget
+   *
+   * @return string Description du widget
+   */
+  public function get_description()
+  {
+    return __('Widget pour afficher un bouton', 'lm-widgets');
   }
 
   /**
@@ -203,13 +210,17 @@ class LM_Widgets_Example_Widget_2 extends \Elementor\Widget_Base
     $nofollow = $settings['button_link']['nofollow'] ? ' rel="nofollow"' : '';
     $url = ! empty($settings['button_link']['url']) ? $settings['button_link']['url'] : '#';
 
-    require_once LM_WIDGETS_PLUGIN_DIR . 'templates/template-example-widget-2.php';
+    require_once 'template.php';
   }
 
-
+  /**
+   * Déclare les styles du widget
+   *
+   * @return array Styles du widget
+   */
   public function get_style_depends(): array
   {
-    return ['example-widget-2'];
+    return [$this->get_name()];
   }
 
   /**
