@@ -24,6 +24,13 @@ class LM_Widgets_Plugin
   private static $instance = null;
 
   /**
+   * Instance de l'activation du plugin
+   *
+   * @var LM_Widgets_Plugin_Activation
+   */
+  public $plugin_activation;
+
+  /**
    * Instance de l'intégration Elementor
    *
    * @var LM_Widgets_Elementor_Integration
@@ -64,12 +71,6 @@ class LM_Widgets_Plugin
    */
   private function init_hooks()
   {
-    // Activation du plugin
-    register_activation_hook(LM_WIDGETS_PLUGIN_FILE, [$this, 'activate']);
-
-    // Désactivation du plugin
-    register_deactivation_hook(LM_WIDGETS_PLUGIN_FILE, [$this, 'deactivate']);
-
     // Initialisation après que WordPress soit chargé
     add_action('init', [$this, 'init']);
 
@@ -83,6 +84,7 @@ class LM_Widgets_Plugin
   private function load_dependencies()
   {
     require_once LM_WIDGETS_PLUGIN_DIR . 'includes/helpers/class-widget-autoregistration.php';
+    require_once LM_WIDGETS_PLUGIN_DIR . 'includes/hooks/class-plugin-activation.php';
     require_once LM_WIDGETS_PLUGIN_DIR . 'includes/hooks/class-elementor-integration.php';
     require_once LM_WIDGETS_PLUGIN_DIR . 'includes/settings/class-settings-page.php';
   }
@@ -92,42 +94,14 @@ class LM_Widgets_Plugin
    */
   public function init()
   {
+    // Initialisation de la classe d'activation du plugin
+    $plugin_activation = new LM_Widgets_Plugin_Activation();
+
     // Initialisation de la page de réglages
     $this->settings_page = new LM_Widgets_Settings_Page();
 
     // Initialisation de l'intégration Elementor
     $this->elementor_integration = new LM_Widgets_Elementor_Integration();
-  }
-
-  /**
-   * Activation du plugin
-   */
-  public function activate()
-  {
-    // Initialisation des options par défaut si elles n'existent pas
-    $available_widgets = LM_Widgets_Auto_Registration::get_available_widgets();
-    $default_settings = [];
-
-    // Activer tous les widgets disponibles par défaut
-    foreach ($available_widgets as $widget_id => $widget_data) {
-      $default_settings[$widget_id] = true;
-    }
-
-    if (! get_option('lm_widgets_settings')) {
-      add_option('lm_widgets_settings', $default_settings);
-    }
-
-    // Flush rewrite rules si nécessaire
-    flush_rewrite_rules();
-  }
-
-  /**
-   * Désactivation du plugin
-   */
-  public function deactivate()
-  {
-    // Flush rewrite rules si nécessaire
-    flush_rewrite_rules();
   }
 
   /**
