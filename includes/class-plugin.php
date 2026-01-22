@@ -75,9 +75,6 @@ class LM_Widgets_Plugin
 
     // Ajout du lien "Réglages" dans la liste des plugins
     add_filter('plugin_action_links_' . plugin_basename(LM_WIDGETS_PLUGIN_FILE), [$this, 'add_settings_link']);
-
-    // Enregistrement des styles
-    add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
   }
 
   /**
@@ -148,18 +145,5 @@ class LM_Widgets_Plugin
     );
     array_unshift($links, $settings_link);
     return $links;
-  }
-
-  /**
-   * Déclare automatiquement les styles des widgets activés
-   */
-  public function enqueue_styles()
-  {
-    // Récupérer les widgets activés
-    $active_widgets = LM_Widgets_Auto_Registration::get_active_widgets();
-
-    foreach ($active_widgets as $widget_id => $widget_data) {
-      wp_register_style($widget_data['name'], LM_WIDGETS_PLUGIN_URL . 'includes/widgets/' . $widget_data['name'] .  '/style.css', [], LM_WIDGETS_VERSION);
-    }
   }
 }

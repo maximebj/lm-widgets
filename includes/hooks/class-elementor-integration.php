@@ -24,6 +24,7 @@ class LM_Widgets_Elementor_Integration
     add_action('elementor/elements/categories_registered', [$this, 'register_category'], 1);
     add_action('elementor/elements/categories_registered', [$this, 'reorder_categories'], 999);
     add_action('elementor/widgets/register', [$this, 'register_widgets']);
+    add_action('wp_enqueue_scripts', [$this, 'enqueue_styles']);
   }
 
   /**
@@ -85,6 +86,18 @@ class LM_Widgets_Elementor_Integration
           $widgets_manager->register(new $widget_data['class']());
         }
       }
+    }
+  }
+
+  /**
+   * Déclare automatiquement les styles des widgets activés
+   */
+  public function enqueue_styles()
+  {
+    $active_widgets = LM_Widgets_Auto_Registration::get_active_widgets();
+
+    foreach ($active_widgets as $widget_id => $widget_data) {
+      wp_register_style($widget_data['name'], LM_WIDGETS_PLUGIN_URL . 'includes/widgets/' . $widget_data['name'] .  '/style.css', [], LM_WIDGETS_VERSION);
     }
   }
 }
